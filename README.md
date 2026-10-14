@@ -31,13 +31,11 @@ O projeto nasceu de uma pergunta simples: "onde está a nossa base?". As informa
 
 ## Arquitetura
 
-| Camada | Tecnologia |
-|---|---|
-| Front-end | HTML, CSS e JavaScript puro, sem framework e sem etapa de build |
-| Mapa | SVG gerado no cliente, com zoom por transform CSS (GPU) |
-| Banco e login | Supabase (Postgres, Auth e RLS) |
-| Hospedagem | Site estático (Netlify) |
-| Pipeline de dados | Scripts Node.js idempotentes |
+- **Front-end:** HTML, CSS e JavaScript puro, sem framework e sem etapa de build
+- **Mapa:** SVG gerado no cliente, com zoom por transform CSS (GPU)
+- **Banco e login:** Supabase (Postgres, Auth e RLS)
+- **Hospedagem:** site estático (Netlify)
+- **Pipeline de dados:** scripts Node.js idempotentes
 
 ```
 public/                 site publicado (único diretório que vai ao ar)

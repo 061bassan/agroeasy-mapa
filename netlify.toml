@@ -1,0 +1,4 @@
+# Só a pasta public/ vai ao ar. Dados de origem (dados/) e a carga do banco (supabase/) nunca são publicados.
+[build]
+  publish = "public"
+  command = ""

@@ -1,0 +1,8 @@
+# Configuração local do editor/assistente
+.claude/
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+# Dados internos: nunca vão ao repositório público
+privado/

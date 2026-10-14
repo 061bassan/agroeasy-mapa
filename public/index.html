@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Segurança: só carrega recursos do próprio site; nada de scripts/estilos inline ou de terceiros -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="referrer" content="no-referrer">
+  <!-- A base contém nomes de pessoas: não indexar em buscadores -->
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#2A2B2B">
+  <title>AgroEasy · Mapa da Base</title>
+  <meta name="description" content="Mapa interativo da distribuição geográfica de leads, clientes e parceiros AgroEasy.">
+  <link rel="preload" href="assets/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/inadimplencia.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body class="welcome-open auth-open">
+  <!-- Símbolo da marca, reutilizado no cabeçalho, na tela inicial e no rodapé -->
+  <svg class="sprite" aria-hidden="true">
+    <defs>
+      <symbol id="ic-leads" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></g></symbol>
+      <symbol id="ic-clientes" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7"/><path d="M16 11l2 2 4-4"/></g></symbol>
+      <symbol id="ic-parceiros" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="4"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7"/><circle cx="17" cy="7" r="3"/><path d="M22 19c0-3-2-5-5-5"/></g></symbol>
+      <symbol id="ic-todos" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".6"/></g></symbol>
+    </defs>
+  </svg>
+
+  <a class="skip" href="#panel">Pular para os detalhes</a>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="AgroEasy — voltar à visão geral">
+      <span class="brand-text">
+        <span class="brand-name">AGROEASY</span>
+        <span class="brand-sub">Distribuição geográfica da base</span>
+      </span>
+    </a>
+
+    <nav class="modes" role="tablist" aria-label="O que visualizar">
+      <button role="tab" data-mode="todos"><svg aria-hidden="true"><use href="#ic-todos"/></svg>Todos</button>
+      <button role="tab" data-mode="leads"><svg aria-hidden="true"><use href="#ic-leads"/></svg>Leads</button>
+      <button role="tab" data-mode="clientes"><svg aria-hidden="true"><use href="#ic-clientes"/></svg>Clientes</button>
+      <button role="tab" data-mode="parceiros"><svg aria-hidden="true"><use href="#ic-parceiros"/></svg>Parceiros</button>
+      <button role="tab" data-extra="inadimplencia" aria-selected="false"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg>Inadimplência<span class="tab-extra"> Rural</span></button>
+    </nav>
+
+    <div class="search" role="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="search" type="search" maxlength="60" placeholder="Buscar estado, município ou parceiro" autocomplete="off" spellcheck="false"
+             role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Buscar estado, município ou parceiro" aria-controls="searchResults">
+      <ul id="searchResults" class="search-results" role="listbox" hidden></ul>
+    </div>
+
+    <button id="sairBtn" class="ghost-btn sair-btn" type="button" title="Sair da conta" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/></svg>
+      <span>Sair</span>
+    </button>
+  </header>
+
+  <main class="layout">
+    <section class="map-card" aria-label="Mapa do Brasil">
+      <div class="map-head">
+        <div>
+          <h1 id="mapTitle">Mapa do Brasil</h1>
+          <p class="muted">Clique em um estado para ver os detalhes.</p>
+        </div>
+        <div class="map-actions">
+          <button id="shareBtn" class="ghost-btn" title="Copiar link desta visualização">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+            <span>Copiar link</span>
+          </button>
+        </div>
+      </div>
+      <div class="views" role="group" aria-label="Tipo de mapa">
+        <button data-view="areas" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>Estados</button>
+        <button data-view="pinos" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Cidades</button>
+        <button data-view="cobertura" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg>Oportunidades</button>
+      </div>
+      <div class="map-wrap">
+        <svg id="map" role="group" aria-label="Estados do Brasil"></svg>
+        <button id="resetZoom" class="map-back" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Voltar ao Brasil
+        </button>
+        <div id="tooltip" class="tooltip" hidden></div>
+      </div>
+      <div id="legend" class="legend"></div>
+    </section>
+
+    <aside id="panel" class="panel" tabindex="-1" aria-live="polite"></aside>
+  </main>
+
+  <section id="kpis" class="kpis" aria-label="Indicadores da base"></section>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <span><b>AGROEASY</b> Consultoria Financeira</span>
+    </div>
+    <div id="fonte" class="fonte"></div>
+    <p class="credits">Bandeiras estaduais: Wikimedia Commons (domínio público). Geometria dos estados: IBGE.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <!-- Tela inicial: pergunta o que o usuário quer visualizar -->
+  <div id="welcome" class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <img class="welcome-map" src="assets/brasil-contorno.svg" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
+    <div class="welcome-box">
+      <p class="welcome-brand">AGROEASY <span>Consultoria Financeira</span></p>
+      <h2 id="welcomeTitle">O que você quer ver no mapa?</h2>
+      <div class="welcome-options">
+        <button data-mode="leads"><svg class="wo-ic" aria-hidden="true"><use href="#ic-leads"/></svg><span class="wo-num" data-count="leads"></span><span class="wo-title">LEADS</span><span class="wo-sub">Interessados</span></button>
+        <button data-mode="clientes"><svg class="wo-ic" aria-hidden="true"><use href="#ic-clientes"/></svg><span class="wo-num" data-count="clientes"></span><span class="wo-title">CLIENTES</span><span class="wo-sub">Base de clientes</span></button>
+        <button data-mode="parceiros"><svg class="wo-ic" aria-hidden="true"><use href="#ic-parceiros"/></svg><span class="wo-num" data-count="parceiros"></span><span class="wo-title">PARCEIROS</span><span class="wo-sub">Indicadores</span></button>
+        <button data-mode="todos" class="wo-all"><svg class="wo-ic" aria-hidden="true"><use href="#ic-todos"/></svg><span class="wo-num">3</span><span class="wo-title">TODOS</span><span class="wo-sub">As 3 bases juntas</span></button>
+      </div>
+      <button type="button" class="wo-inad" data-extra="inadimplencia-boasvindas">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/></svg>
+        <span class="wo-title">Inadimplência rural</span><span class="wo-sub">Onde priorizar a prospecção</span>
+      </button>
+      <p class="muted small">Pode trocar a visualização a qualquer momento no topo da página.</p>
+    </div>
+  </div>
+
+  <!-- Login: o mapa e os dados só carregam depois de entrar -->
+  <div id="auth" class="auth" role="dialog" aria-modal="true" aria-labelledby="authTitulo">
+    <div class="auth-box">
+      <p class="welcome-brand">AGROEASY <span>Consultoria Financeira</span></p>
+      <h2 id="authTitulo">Entrar</h2>
+      <p id="authMsg" class="auth-msg" role="alert" hidden></p>
+
+      <form id="fEntrar" data-painel="entrar" novalidate hidden>
+        <label>E-mail<input type="email" name="email" autocomplete="username" inputmode="email" maxlength="254" required></label>
+        <label>Senha
+          <span class="campo-senha"><input type="password" name="senha" autocomplete="current-password" maxlength="72" required><button type="button" class="ver-senha" aria-pressed="false">Mostrar</button></span>
+        </label>
+        <button type="submit" class="auth-btn">Entrar</button>
+        <button type="button" class="auth-link" data-ir="esqueci">Esqueci minha senha</button>
+        <p class="auth-rodape">Primeiro acesso? <button type="button" class="auth-link inline" data-ir="criar">Criar conta</button></p>
+      </form>
+
+      <form id="fCriar" data-painel="criar" novalidate hidden>
+        <p class="auth-txt">Use seu e-mail <b>@agroeasy.com.br</b> e crie uma senha. Enviaremos um e-mail para você confirmar o cadastro.</p>
+        <label>E-mail da empresa<input type="email" name="email" autocomplete="username" inputmode="email" maxlength="254" placeholder="nome@agroeasy.com.br" required></label>
+        <label>Senha
+          <span class="campo-senha"><input type="password" name="senha" autocomplete="new-password" minlength="10" maxlength="72" required><button type="button" class="ver-senha" aria-pressed="false">Mostrar</button></span>
+        </label>
+        <label>Confirmar senha<input type="password" name="confirmar" autocomplete="new-password" minlength="10" maxlength="72" required></label>
+        <p class="auth-txt">Pelo menos 10 caracteres, com letras e números.</p>
+        <button type="submit" class="auth-btn">Criar conta</button>
+        <button type="button" class="auth-link" data-ir="entrar">Já tenho conta</button>
+      </form>
+
+      <form id="fEsqueci" data-painel="esqueci" novalidate hidden>
+        <p class="auth-txt">Para redefinir sua senha, fale com o administrador do mapa. Ele cria uma senha provisória para você entrar.</p>
+        <button type="button" class="auth-btn" data-ir="entrar">Voltar para o login</button>
+      </form>
+
+      <form id="fNova" data-painel="nova-senha" novalidate hidden>
+        <p class="auth-txt">Use pelo menos 10 caracteres, com letras e números.</p>
+        <label>Nova senha
+          <span class="campo-senha"><input type="password" name="senha" autocomplete="new-password" minlength="10" maxlength="72" required><button type="button" class="ver-senha" aria-pressed="false">Mostrar</button></span>
+        </label>
+        <label>Confirmar nova senha<input type="password" name="confirmar" autocomplete="new-password" minlength="10" maxlength="72" required></label>
+        <button type="submit" class="auth-btn">Salvar senha e entrar</button>
+      </form>
+
+      <div data-painel="carregando" class="auth-carregando"><span class="spinner" aria-hidden="true"></span>Carregando…</div>
+
+      <div data-painel="sem-acesso" hidden>
+        <p class="auth-txt">Sua conta está ativa, mas ainda não tem permissão para ver o mapa. Fale com o administrador.</p>
+        <button type="button" class="auth-btn" data-acao="sair">Sair</button>
+      </div>
+      <div data-painel="erro" hidden>
+        <button type="button" class="auth-btn" data-acao="sair">Voltar ao login</button>
+      </div>
+      <div data-painel="config" hidden></div>
+    </div>
+  </div>
+
+  <script src="js/geo.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

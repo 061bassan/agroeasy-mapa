@@ -1,0 +1,22 @@
+{
+ "_fonte": "IBGE, API de localidades (servicodados.ibge.gov.br/api/v1/localidades/municipios)",
+ "_obs": "Grafia oficial para municípios cuja geometria do app usa grafia antiga. Aplicado por carregar-inadimplencia.js.",
+ "nomes": {
+  "1400605": "São Luiz do Anauá",
+  "1708254": "Tabocão",
+  "2400208": "Assú",
+  "2401206": "Arez",
+  "2401305": "Campo Grande",
+  "2405306": "Januário Cicco",
+  "2613107": "São Caitano",
+  "2800100": "Amparo do São Francisco",
+  "2802601": "Graccho Cardoso",
+  "2922250": "Muquém do São Francisco",
+  "2928505": "Santa Terezinha",
+  "3105509": "Barão do Monte Alto",
+  "3122900": "Dona Euzébia",
+  "3165206": "São Tomé das Letras",
+  "3516101": "Florínea",
+  "5107800": "Santo Antônio de Leverger"
+ }
+}

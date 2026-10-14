@@ -1,0 +1,293 @@
+/* Aba "Inadimplência Rural": reaproveita .layout, .map-card, .views, .panel, .rank, .eyebrow, .back-btn, .kpis e .legend do app.
+   Aqui ficam só os estilos que não existem lá. Tudo é escopado em .inad para não afetar as outras abas. */
+body.inad-on main.layout:not(.inad-layout),
+body.inad-on #kpis,
+body.inad-on > .footer:not(.inad-footer) { display: none; }
+.inad[hidden] { display: none !important; }
+body.welcome-open .inad, body.auth-open .inad { visibility: hidden; }
+
+/* Mapa: usa as MESMAS classes do mapa das outras abas (.uf, .lbl, .badge, .mun, .pin-marker...);
+   aqui só as regras que no app são escopadas por #map. */
+.inad #inadMap { width: 100%; height: auto; display: block; overflow: visible; min-height: 300px; max-height: max(320px, calc(100dvh - var(--topbar-h, 72px) - 215px)); shape-rendering: geometricPrecision; text-rendering: geometricPrecision; }
+#inadMap.has-selection .uf:not(.is-selected) { opacity: .3; }
+#inadMap.has-selection .lbl:not(.is-selected) { opacity: .35; }
+#inadMap.has-selection .lbl.is-selected, #inadMap.has-selection .lines { display: none; }
+#inadMap .uf:hover { stroke: #FFF6DA; stroke-width: 1.6; }
+#inadMap .pins { display: none; }
+#inadMap.pins-on .pins { display: inline; }
+#inadMap .pin.off { display: none; }
+#inadMap.mun-on .sel-shade { fill: none; }
+#inadMap .pin-kind.k-sem { color: var(--inativo); }
+#inadMap .pin-kind.k-com { color: var(--gold); }
+#inadMap .pin-kind.k-inativo { color: #8C8980; }
+.inad .inad-sw { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.inad .inad-sw.sem { background: var(--inativo); }
+.inad .inad-sw.com { background: var(--gold); }
+.inad .inad-sw.inativo { background: #8C8980; }
+.inad .inad-sw.nd { background: #3E3F3F; border-radius: 4px; }
+.inad .legend .ramp.ramp-inad { background: linear-gradient(90deg, #4A4B4B, #CBA16C); }
+
+.inad .inad-tip {
+  position: absolute; z-index: 5; pointer-events: none; width: max-content; max-width: 250px; padding: 9px 11px; font-size: 12.5px; line-height: 1.45;
+  background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+
+/* Aviso discreto de dados parciais */
+.inad .inad-aviso {
+  margin: 10px 0 0; padding: 7px 12px; font-size: 12.5px; line-height: 1.4; color: var(--muted);
+  background: var(--surface-2); border: 1px solid var(--line); border-left: 3px solid var(--copper); border-radius: 8px;
+}
+.inad .inad-aviso b { color: var(--text); font-weight: 500; }
+
+/* Painel */
+.inad .panel h2 { margin: 2px 0 0; }
+.inad .inad-sec { display: flex; flex-direction: column; gap: 8px; }
+.inad .inad-sec-h { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 10px; }
+.inad .inad-sec h3 { margin: 0; font-size: 16px; font-weight: 500; }
+.inad .inad-tag { font-size: 11.5px; padding: 2px 9px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); font-weight: 500; white-space: nowrap; }
+.inad .inad-tag.comprovada, .inad .inad-tag.com { color: var(--ativo); border-color: var(--ativo); }
+.inad .inad-tag.potencial, .inad .inad-tag.sem { color: var(--inativo); border-color: var(--inativo); }
+
+.inad .inad-filtros-box { display: flex; flex-direction: column; gap: 6px; }
+.inad .inad-filtros-lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+.inad .views.inad-filtros, .inad .views.inad-ord { margin-top: 0; flex-wrap: wrap; border-radius: 18px; }
+.inad .views.inad-filtros button, .inad .views.inad-ord button { padding: 5px 12px; font-size: 13px; }
+
+.inad .inad-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.inad .inad-list li + li { border-top: 1px solid rgba(77,78,78,.6); }
+.inad .inad-it { width: 100%; display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px 6px; text-align: left; background: none; border: 0; color: var(--text); font: inherit; cursor: pointer; border-radius: 8px; }
+.inad .inad-it:hover { background: var(--surface-3); }
+.inad .inad-rk { color: var(--muted); font-size: 13px; text-align: center; }
+.inad .inad-nm, .inad .inad-vl { display: flex; flex-direction: column; min-width: 0; }
+.inad .inad-nm b { font-weight: 500; overflow-wrap: anywhere; }
+.inad .inad-nm .muted { font-size: 12px; }
+.inad .inad-it small { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.inad .inad-vl { text-align: right; white-space: nowrap; }
+.inad .inad-vl b { color: var(--gold); font-weight: 500; }
+.inad .inad-mais summary, .inad .inad-met summary { cursor: pointer; color: var(--gold); font-size: 13.5px; padding: 6px 0; }
+
+.inad .inad-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.inad .inad-grid .kpi { min-width: 0; }
+.inad .inad-evo-row { display: grid; grid-template-columns: 56px minmax(0, 1fr) 76px; align-items: center; gap: 8px; font-size: 12.5px; padding: 2px 0; }
+.inad .inad-evo-row .bar { display: block; height: 8px; background: var(--surface-3); border-radius: 99px; overflow: hidden; }
+.inad .inad-evo-row .bar b { display: block; height: 100%; background: var(--grad); }
+.inad .inad-evo-row em { font-style: normal; text-align: right; color: var(--muted); white-space: nowrap; }
+.inad .inad-met { border-top: 1px solid var(--line); padding-top: 8px; }
+.inad .inad-dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 6px 0 10px; font-size: 13px; }
+.inad .inad-dl dt { color: var(--muted); }
+.inad .inad-dl dd { margin: 0; }
+.inad .inad-met p { margin: 6px 0; }
+.inad .inad-vazio { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.inad-footer .fonte a { color: var(--gold); overflow-wrap: anywhere; }
+
+/* Botão da aba no menu */
+.modes [data-extra="inadimplencia"] { white-space: nowrap; }
+
+@media (max-width: 960px) {
+  .inad .inad-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  
+}
+@media (max-width: 560px) {
+  .modes [data-extra="inadimplencia"] { font-size: 12px; padding: 8px 6px; }
+  .inad .inad-grid .kpi .k-val { font-size: 22px; }
+  .inad .views { flex-wrap: wrap; border-radius: 18px; }
+  .inad .inad-it { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 8px; }
+}
+
+/* Tabela de estados: valores e títulos numéricos nunca quebram linha */
+.inad .rank th.num, .inad .rank td.num { white-space: nowrap; }
+.inad .rank th { white-space: nowrap; }
+.inad .rank td.bar-cell { width: 64px; }
+
+/* Perfil do município: listas simples (culturas, rebanhos, finalidades) */
+.inad .inad-simple { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.inad .inad-simple li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 4px; }
+.inad .inad-simple li + li { border-top: 1px solid rgba(77,78,78,.6); }
+.inad .inad-simple .inad-nm b { font-weight: 500; }
+.inad .inad-simple small { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+.inad .inad-sec > .eyebrow, .inad .inad-sec p.eyebrow { margin-top: 4px; }
+
+/* Simplificação: controles compactos e blocos sob demanda */
+.inad .inad-ctrl { display: flex; flex-wrap: wrap; gap: 10px; }
+.inad .inad-ctrl label { display: flex; flex-direction: column; gap: 4px; flex: 1 1 150px; min-width: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.inad .inad-ctrl select {
+  width: 100%; font: inherit; font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--text); cursor: pointer;
+  background-color: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 28px 7px 10px; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%), linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+  background-position: calc(100% - 14px) 52%, calc(100% - 9px) 52%; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.inad .inad-ctrl select:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.inad .inad-lazy { padding-top: 6px; }
+.inad #inadPanel.is-loading { opacity: .55; pointer-events: none; transition: opacity .15s ease; }
+.inad .inad-it .inad-vl small { white-space: nowrap; }
+
+/* Resumo comercial: frase de abertura, período por bloco e justificativa */
+.inad .inad-lead { margin: 4px 0 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+.inad .inad-per { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.inad .inad-just { margin: 0; font-size: 15px; line-height: 1.5; color: var(--text); }
+.inad .inad-grid.cols3m { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 561px) { .inad .inad-grid.cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.inad .inad-grid.cols3 .k-val, .inad .inad-grid.cols3m .k-val { font-size: 22px; }
+
+/* ===== Carregamento: esqueleto no lugar de telas vazias ===== */
+.inad .inad-skel { display: flex; flex-direction: column; gap: 10px; }
+.inad .inad-skel i {
+  display: block; height: 52px; border-radius: 10px;
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--surface-3) 50%, var(--surface-2) 100%); background-size: 200% 100%;
+  animation: inadShimmer 1.3s ease-in-out infinite;
+}
+@keyframes inadShimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+#inadMap .uf.inad-esq { fill: #3E3F3F; cursor: default; animation: inadPulse 1.6s ease-in-out infinite; }
+@keyframes inadPulse { 50% { opacity: .6; } }
+
+/* ===== Abertura do estado: mais limpa e sem engasgo ===== */
+#inadMap .mun { transition: none; stroke: rgba(20, 21, 21, .5); stroke-width: .5; }
+#inadMap .mun-layer, #inadMap .mun-labels { animation: none; transition: opacity .25s ease; }
+#inadMap.zooming .mun-layer, #inadMap.zooming .mun-labels { opacity: 0; }
+#inadMap.has-selection .badge { display: none; }
+#inadMap.has-selection .uf:not(.is-selected) { opacity: .14; }
+#inadMap.has-selection .lbl:not(.is-selected) { opacity: .22; }
+#inadMap .sel-shade { stroke-width: 3; stroke: rgba(214, 197, 136, .2); }
+#inadMap .sel-outline { stroke-width: 1.8; }
+.inad .map-card .inad-aviso { margin-top: 8px; }
+
+/* ===== Celular ===== */
+@media (max-width: 640px) {
+  .modes .tab-extra { display: none; }
+  .inad .map-card { padding: 14px 12px 12px; }
+  .inad .inad-ctrl { gap: 8px; }
+  .inad .inad-dd { flex: 1 1 100%; }
+  .inad .inad-it { padding: 10px 4px; }
+  .inad .inad-vl b { font-size: 15px; }
+  .inad .legend { gap: 6px 14px; font-size: 12.5px; }
+  .inad #inadMap { min-height: 260px; }
+}
+
+/* ===== Atalho na tela inicial ===== */
+.wo-inad {
+  width: 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 12px;
+  padding: 14px 16px; margin: 0 0 18px; border-radius: 16px; cursor: pointer; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line); font: inherit;
+  transition: transform .2s, border-color .2s;
+}
+.wo-inad svg { width: 24px; height: 24px; color: var(--copper); flex: none; }
+.wo-inad .wo-title { font-size: 17px; font-weight: 500; }
+.wo-inad .wo-sub { font-size: 12.5px; color: var(--muted); }
+.wo-inad:hover, .wo-inad:focus-visible { border-color: var(--gold); transform: translateY(-2px); outline: none; }
+
+/* ===== Alvos de toque confortáveis no celular ===== */
+@media (pointer: coarse) {
+  .inad .inad-dd-btn { min-height: 44px; }
+  .inad .inad-dd-menu li { padding: 12px 10px; }
+  .inad .views button { min-height: 40px; }
+  .inad .inad-it { min-height: 56px; }
+  .inad .back-btn { min-height: 40px; }
+  .inad .inad-mais summary { padding: 10px 0; }
+}
+
+
+/* ===== Controles no padrão do app: seletor animado (período) + segmentado com indicador (presença) ===== */
+.inad .inad-ctrl { position: relative; z-index: 30; display: flex; flex-direction: column; gap: 12px; }
+.inad .inad-dd-lbl { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 6px; }
+.inad .inad-dd { position: relative; }
+.inad .inad-dd-btn {
+  width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; cursor: pointer;
+  min-height: 44px; padding: 0 14px; font: inherit; font-size: 14px; color: var(--text);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.inad .inad-dd-btn:hover { border-color: rgba(214, 197, 136, .55); background: var(--surface-2); }
+.inad .inad-dd[data-open="1"] .inad-dd-btn { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(214, 197, 136, .12); }
+.inad .inad-dd-btn:focus-visible { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px rgba(214, 197, 136, .18); }
+.inad .inad-dd-ic { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--copper); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.inad .inad-dd-val { flex: 1; min-width: 0; display: flex; align-items: baseline; gap: 8px; font-weight: 500; }
+.inad .inad-dd-val em, .inad .inad-dd-menu li em { font-style: normal; font-weight: 400; font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+.inad .inad-dd-chev { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .25s cubic-bezier(.2, .8, .2, 1); }
+.inad .inad-dd[data-open="1"] .inad-dd-chev { transform: rotate(180deg); }
+/* menu: entra com fade + leve descida; os itens aparecem em sequência */
+.inad .inad-dd-menu {
+  position: absolute; z-index: 40; top: calc(100% + 8px); left: 0; right: 0; margin: 0; padding: 6px; list-style: none;
+  max-height: 264px; overflow-y: auto; overscroll-behavior: contain;
+  background: #232424; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 18px 44px rgba(0, 0, 0, .55);
+  opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px) scale(.98); transform-origin: 50% 0;
+  transition: opacity .16s ease, transform .2s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .2s;
+}
+.inad .inad-dd[data-open="1"] .inad-dd-menu {
+  opacity: 1; visibility: visible; pointer-events: auto; transform: none;
+  transition: opacity .16s ease, transform .22s cubic-bezier(.2, .8, .2, 1), visibility 0s;
+}
+.inad .inad-dd-menu li {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 40px; padding: 0 12px;
+  border-radius: 10px; font-size: 14px; color: var(--text); cursor: pointer; outline: none;
+  opacity: 0; transform: translateY(-4px);
+  transition: background .15s ease, opacity .18s ease, transform .22s cubic-bezier(.2, .8, .2, 1);
+}
+.inad .inad-dd-menu li > span { display: flex; align-items: baseline; gap: 8px; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li { opacity: 1; transform: none; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li:nth-child(2) { transition-delay: .02s; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li:nth-child(3) { transition-delay: .04s; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li:nth-child(4) { transition-delay: .06s; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li:nth-child(5) { transition-delay: .08s; }
+.inad .inad-dd[data-open="1"] .inad-dd-menu li:nth-child(n+6) { transition-delay: .1s; }
+.inad .inad-dd-menu li:hover, .inad .inad-dd-menu li:focus-visible { background: var(--surface-3); }
+.inad .inad-dd-menu li:active { transform: scale(.985); }
+.inad .inad-dd-menu li[aria-selected="true"] { background: var(--surface-3); box-shadow: inset 0 0 0 1px rgba(214, 197, 136, .6); color: var(--text); }
+.inad .inad-dd-ok { width: 16px; height: 16px; flex: none; fill: none; stroke: var(--gold); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .25s cubic-bezier(.3, 1.4, .5, 1); }
+.inad .inad-dd-menu li[aria-selected="true"] .inad-dd-ok { opacity: 1; transform: none; }
+.inad .inad-dd-menu::-webkit-scrollbar { width: 8px; }
+.inad .inad-dd-menu::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 8px; }
+
+/* segmentado: mesma pílula do .views, com indicador dourado que desliza */
+.inad .inad-seg {
+  position: relative; display: flex; flex-wrap: wrap; gap: 2px; padding: 3px;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px;
+}
+.inad .inad-seg button {
+  position: relative; z-index: 1; flex: 1 1 auto; min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--muted); font: inherit; font-size: 13.5px; font-weight: 500; white-space: nowrap;
+  transition: color .2s ease;
+}
+.inad .inad-seg button:hover { color: var(--text); }
+.inad .inad-seg button[aria-checked="true"] { color: var(--text); }
+.inad .inad-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.inad .inad-seg-ind {
+  position: absolute; left: 0; top: 0; z-index: 0; width: 0; height: 0; border-radius: 999px; pointer-events: none; opacity: 0;
+  background: var(--surface-3); box-shadow: inset 0 0 0 1px var(--gold);
+  transition: transform .32s cubic-bezier(.3, .9, .3, 1), width .32s cubic-bezier(.3, .9, .3, 1), height .32s cubic-bezier(.3, .9, .3, 1), opacity .2s ease;
+}
+.inad .inad-seg-ind.on { opacity: 1; }
+/* trocar período/filtro não repete a entrada animada de todo o painel */
+.inad #inadPanel.inad-quiet > * { animation: none; }
+@media (min-width: 641px) { .inad .inad-ctrl { flex-direction: column; } }
+@media (max-width: 640px) {
+  .inad .inad-seg { border-radius: 20px; }
+  .inad .inad-seg button { flex: 1 1 calc(50% - 2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inad .inad-dd-menu, .inad .inad-dd-menu li, .inad .inad-seg-ind, .inad .inad-dd-chev { transition: none !important; }
+}
+
+/* ===== Acabamento: blocos expansíveis e linhas das listas ===== */
+.inad .inad-mais > summary, .inad .inad-met > summary {
+  list-style: none; display: flex; align-items: center; gap: 10px; cursor: pointer; border-radius: 8px;
+  transition: color .15s ease;
+}
+.inad .inad-mais > summary::-webkit-details-marker, .inad .inad-met > summary::-webkit-details-marker { display: none; }
+.inad .inad-mais > summary::before {
+  content: ''; flex: none; width: 7px; height: 7px; margin: 0 3px 0 2px;
+  border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+  transform: rotate(-45deg); transition: transform .24s cubic-bezier(.2, .8, .2, 1);
+}
+.inad .inad-mais[open] > summary::before { transform: rotate(45deg); }
+.inad .inad-mais > summary:hover { color: var(--text); }
+.inad .inad-mais > summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.inad .inad-mais[open] > *:not(summary) { animation: rise .28s ease both; }
+.inad .inad-it { transition: background .15s ease, transform .15s ease; }
+.inad .inad-it:active { transform: scale(.995); }
+.inad .inad-it .inad-rk { transition: color .15s ease; }
+.inad .inad-it:hover .inad-rk, .inad .inad-it:focus-visible .inad-rk { color: var(--gold); }
+.inad .inad-it:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.inad .inad-grid .kpi { transition: border-color .2s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .inad .inad-mais[open] > *:not(summary), .inad .inad-mais > summary::before { animation: none; transition: none; }
+}

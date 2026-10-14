@@ -953,11 +953,11 @@
       `<li><span class="inad-nm"><b>${esc(r.item.replace(' - total', ''))}</b></span><span class="inad-vl"><b>${esc(nf.format(Number(r.valor)))}</b><small>${esc(r.unidade.toLowerCase())}</small></span></li>`);
     if (leite) pecLinhas.push(`<li><span class="inad-nm"><b>Leite</b><small>produção anual</small></span><span class="inad-vl"><b>${esc(nf.format(Number(leite.valor)))}</b><small>${esc(leite.unidade.toLowerCase())}</small></span></li>`);
     const kpis = [
-      totalValor != null ? kpi('Valor da produção', money(totalValor), `IBGE · ${ano}`) : kpi('Valor da produção', 'indisponível', 'sem dado na PAM'),
-      total && total.area_colhida_ha != null ? kpi('Área colhida', ha(Number(total.area_colhida_ha)), `IBGE · ${ano}`) : kpi('Área colhida', 'indisponível', 'sem dado na PAM')
+      totalValor != null ? kpi('Valor da produção', money(totalValor), `IBGE · ${esc(ano)}`) : kpi('Valor da produção', 'indisponível', 'sem dado na PAM'),
+      total && total.area_colhida_ha != null ? kpi('Área colhida', ha(Number(total.area_colhida_ha)), `IBGE · ${esc(ano)}`) : kpi('Área colhida', 'indisponível', 'sem dado na PAM')
     ].join('');
     return `<div class="inad-grid">${kpis}</div>
-      ${cult.length ? `<p class="eyebrow">Principais culturas · ${ano}</p><ul class="inad-simple">${cult.slice(0, 3).map(linha).join('')}</ul>
+      ${cult.length ? `<p class="eyebrow">Principais culturas · ${esc(ano)}</p><ul class="inad-simple">${cult.slice(0, 3).map(linha).join('')}</ul>
         ${cult.length > 3 ? `<details class="inad-mais"><summary>Ver outras ${Math.min(cult.length - 3, 12)} culturas</summary><ul class="inad-simple">${cult.slice(3, 15).map(linha).join('')}</ul></details>` : ''}` : '<p class="table-note">Sem produção agrícola registrada pelo IBGE neste município.</p>'}
       ${pecLinhas.length ? `<p class="eyebrow">Pecuária · ${pec[0].ano}</p><ul class="inad-simple">${pecLinhas.join('')}</ul>` : '<p class="table-note">Sem dados de pecuária disponíveis.</p>'}
       <p class="table-note">Dado anual do IBGE, último ano consolidado (${esc(String(ano || (pec[0] && pec[0].ano) || '—'))}).</p>`;

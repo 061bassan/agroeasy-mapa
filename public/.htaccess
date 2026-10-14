@@ -16,13 +16,15 @@ Options -Indexes
 
 # Cabeçalhos de segurança
 <IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://iszkhvozydzvktqdhhgs.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
   Header always set X-Frame-Options "DENY"
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "no-referrer"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
 </IfModule>
 
 # Compressão (carrega mais rápido)
